@@ -2,13 +2,26 @@
 
 #
 # edit these variables before running script
-DATASET='ebmnlp'
-TASK='pico'
-with_finetuning='' #'_finetune'  # or '' for not fine tuning
-dataset_size=38124
+PARENT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+PROJECT_ROOT="$(dirname "$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")")"
+SCIBERT_INPUTS="$PROJECT_ROOT"/"data"/"scibert"
 
-export BERT_VOCAB=/net/nfs.corp/s2-research/scibert/scibert_scivocab_uncased/vocab.txt
-export BERT_WEIGHTS=/net/nfs.corp/s2-research/scibert/scibert_scivocab_uncased/weights.tar.gz
+DATASET='needs_citation'
+TASK='text_classification'
+with_finetuning='' #'_finetune'  # or '' for not fine tuning
+
+export TRAIN_PATH=$SCIBERT_INPUTS/$DATASET/train.txt
+export DEV_PATH=$SCIBERT_INPUTS/$DATASET/dev.txt
+export TEST_PATH=$SCIBERT_INPUTS$DATASET/test.txt
+
+TRAIN_COUNT=$(cat $TRAIN_PATH | wc -l)
+DEV_COUNT=$(cat $DEV_PATH | wc -l)
+TEST_COUNT=$(cat $TEST_PATH | wc -l)
+dataset_size=$(($TRAIN_COUNT + $DEV_COUNT + $TEST_COUNT))
+
+# TODO: make certain these files are actually there
+export BERT_VOCAB=$SCIBERT_INPUTS/vocab.txt
+export BERT_WEIGHTS=$SCIBERT_INPUTS/weights.tar.gz
 
 export DATASET_SIZE=$dataset_size
 
@@ -22,10 +35,6 @@ export PYTORCH_SEED=$PYTORCH_SEED
 export NUMPY_SEED=$NUMPY_SEED
 
 export IS_LOWERCASE=false
-export TRAIN_PATH=data/$TASK/$DATASET/train.txt
-export DEV_PATH=data/$TASK/$DATASET/dev.txt
-export TEST_PATH=data/$TASK/$DATASET/test.txt
-
 export CUDA_DEVICE=0
 
 export GRAD_ACCUM_BATCH_SIZE=32
