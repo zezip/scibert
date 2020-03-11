@@ -1,5 +1,5 @@
-# Run allennlp training locally
-
+# Run allennlp training locally, serializes to /path/to/needs_citation/models/scibert
+# Run as 'bash train_allennlp_local.sh <GPU #>'
 #
 # edit these variables before running script
 PARENT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
@@ -35,10 +35,10 @@ export PYTORCH_SEED=$PYTORCH_SEED
 export NUMPY_SEED=$NUMPY_SEED
 
 export IS_LOWERCASE=false
-export CUDA_DEVICE=0
+export CUDA_DEVICE="$@"
 
 export GRAD_ACCUM_BATCH_SIZE=32
 export NUM_EPOCHS=75
 export LEARNING_RATE=0.001
 
-python -m allennlp.run train $CONFIG_FILE  --include-package scibert -s "$@"
+python -m allennlp.run train $CONFIG_FILE  --include-package scibert -s "$PROJECT_ROOT"/"models"/"scibert"
