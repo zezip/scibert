@@ -2,8 +2,6 @@
 
 #
 # edit these variables before running script
-# Test comment
-# second test comment
 PARENT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 PROJECT_ROOT="$(dirname "$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")")"
 SCIBERT_INPUTS="$PROJECT_ROOT"/"data"/"scibert"
