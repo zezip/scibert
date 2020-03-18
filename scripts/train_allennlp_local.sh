@@ -1,10 +1,11 @@
 # Run allennlp training locally, serializes to /path/to/needs_citation/models/scibert
-# Run as 'bash train_allennlp_local.sh <GPU #>'
+# Run from scibert root as 'bash scripts/train_allennlp_local.sh <GPU #>'
 #
 # edit these variables before running script
 PARENT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 PROJECT_ROOT="$(dirname "$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")")"
-SCIBERT_INPUTS="$PROJECT_ROOT"/"data"/"scibert"
+SCIBERT_INPUTS="$PROJECT_ROOT"/"processed"/"data"/"scibert"
+OUTPUT_DIR="$PROJECT_ROOT"/"models"/"scibert"
 
 DATASET='needs_citation'
 TASK='text_classification'
@@ -12,7 +13,7 @@ with_finetuning='' #'_finetune'  # or '' for not fine tuning
 
 export TRAIN_PATH=$SCIBERT_INPUTS/$DATASET/train.txt
 export DEV_PATH=$SCIBERT_INPUTS/$DATASET/dev.txt
-export TEST_PATH=$SCIBERT_INPUTS$DATASET/test.txt
+export TEST_PATH=$SCIBERT_INPUTS/$DATASET/test.txt
 
 TRAIN_COUNT=$(cat $TRAIN_PATH | wc -l)
 DEV_COUNT=$(cat $DEV_PATH | wc -l)
@@ -41,4 +42,5 @@ export GRAD_ACCUM_BATCH_SIZE=32
 export NUM_EPOCHS=75
 export LEARNING_RATE=0.001
 
-python -m allennlp.run train $CONFIG_FILE  --include-package scibert -s "$PROJECT_ROOT"/"models"/"scibert"
+if [ -d "$OUTPUT_DIR" ]; then rm -rf $OUTPUT_DIR; fi
+python -m allennlp.run train $CONFIG_FILE  --include-package scibert -s $OUTPUT_DIR
