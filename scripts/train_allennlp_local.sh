@@ -5,7 +5,7 @@
 DT=$(date '+%d-%m-%Y_%H-%M-%S')
 PARENT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 PROJECT_ROOT="$(dirname "$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")")"
-SCIBERT_INPUTS="$PROJECT_ROOT"/"processed"/"data"/"scibert"
+SCIBERT_INPUTS="$PROJECT_ROOT"/"data"/"processed"/"scibert"
 OUTPUT_DIR="$PROJECT_ROOT"/"models"/"scibert-""$DT"
 
 DATASET='needs_citation'
