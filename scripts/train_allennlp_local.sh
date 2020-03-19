@@ -2,10 +2,11 @@
 # Run from scibert root as 'bash scripts/train_allennlp_local.sh <GPU #>'
 #
 # edit these variables before running script
+DT=$(date '+%d-%m-%Y_%H-%M-%S')
 PARENT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 PROJECT_ROOT="$(dirname "$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")")"
 SCIBERT_INPUTS="$PROJECT_ROOT"/"processed"/"data"/"scibert"
-OUTPUT_DIR="$PROJECT_ROOT"/"models"/"scibert"
+OUTPUT_DIR="$PROJECT_ROOT"/"models"/"scibert-""$DT"
 
 DATASET='needs_citation'
 TASK='text_classification'
