@@ -6,9 +6,9 @@ DT=$(date '+%d-%m-%Y_%H-%M-%S')
 PARENT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 PROJECT_ROOT="$(dirname "$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")")"
 SCIBERT_INPUTS="$PROJECT_ROOT"/"data"/"processed"/"scibert"
-OUTPUT_DIR="$PROJECT_ROOT"/"models"/"scibert-""$DT"
+OUTPUT_DIR="$PROJECT_ROOT"/"models"/"scibert-metadata-""$DT"
 
-DATASET='needs_citation'
+DATASET='needs_citation_with_metadata'
 TASK='text_classification'
 with_finetuning='' #'_finetune'  # or '' for not fine tuning
 
@@ -21,6 +21,7 @@ DEV_COUNT=$(cat $DEV_PATH | wc -l)
 TEST_COUNT=$(cat $TEST_PATH | wc -l)
 dataset_size=$(($TRAIN_COUNT + $DEV_COUNT + $TEST_COUNT))
 
+# TODO: make certain these files are actually there
 export BERT_VOCAB=$SCIBERT_INPUTS/vocab.txt
 export BERT_WEIGHTS=$SCIBERT_INPUTS/weights.tar.gz
 
